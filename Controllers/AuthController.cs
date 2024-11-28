@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using API_WEB_Ejercicio3.Models;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text.Encodings.Web;
+using System.Text;
 
 namespace API_WEB_Ejercicio3.Controllers
 {
@@ -14,48 +19,61 @@ namespace API_WEB_Ejercicio3.Controllers
     public class AuthController : ControllerBase
     {
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly WebAPIContext _webAPIContext;
-        
-        public AuthController(SignInManager<IdentityUser> signInManager, WebAPIContext webAPIContext)
+        private readonly IUserStore<IdentityUser> _userStore;
+        private readonly IUserEmailStore<IdentityUser> _emailStore;
+
+        public AuthController
+            (
+                SignInManager<IdentityUser> signInManager,
+                UserManager<IdentityUser> userManager,
+                WebAPIContext webAPIContext
+            )
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _webAPIContext = webAPIContext;
+
         }
 
-        public string OnPostAsync(string username, string password)
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register([FromBody] Auth auth)
         {
-            var users = _webAPIContext.Users.ToArrayAsync();
+            IActionResult response = null;
+            List<IdentityRole> roles = await _webAPIContext.Roles.ToListAsync();
+            IEnumerable<string> Iroles = Iroles.AsEnumerable(roles);
+            if (ModelState.IsValid)
+            {
+                var user = new IdentityUser
+                {
+                    UserName = auth.Email,
+                    NormalizedUserName = auth.Email.ToUpper(),
+                    Email = auth.Email,
+                    NormalizedEmail = auth.Email.ToUpper(),
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = false,
+                    LockoutEnabled = false,
+                    AccessFailedCount = 0,
 
-            //returnUrl ??= Url.Content("~/");
+                };
 
-            //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+                user.PasswordHash = Seeder.PasswordHasher.HashPassword(user, auth.Password);
+                
+                //await _webAPIContext.Users.AddAsync(user);
+                var result = await _userManager.CreateAsync(user, auth.Password);
+                await _userManager.AddToRolesAsync(user, 
 
-            //if (ModelState.IsValid)
-            //{
-            //    // This doesn't count login failures towards account lockout
-            //    // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-            //    var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-            //    if (result.Succeeded)
-            //    {
-            //        _logger.LogInformation("User logged in.");
-            //        return LocalRedirect(returnUrl);
-            //    }
-            //    if (result.RequiresTwoFactor)
-            //    {
-            //        return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-            //    }
-            //    if (result.IsLockedOut)
-            //    {
-            //        _logger.LogWarning("User account locked out.");
-            //        return RedirectToPage("./Lockout");
-            //    }
-            //    else
-            //    {
-            //        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            //        return Page();
-            //    }
-            //}
-            return "jj";
-        }       
+                if (result.Succeeded)
+                {
+                    response = Ok("Usuario registrado de forma exitosa: " + auth.Email);
+
+                } else
+                {
+                    response = BadRequest(auth);
+                }
+            }            
+            return response;
+        }
     }
 }
