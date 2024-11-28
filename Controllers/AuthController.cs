@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text.Encodings.Web;
 using System.Text;
+using NuGet.Versioning;
+using Microsoft.CodeAnalysis.FlowAnalysis;
 
 namespace API_WEB_Ejercicio3.Controllers
 {
@@ -42,7 +44,6 @@ namespace API_WEB_Ejercicio3.Controllers
         {
             IActionResult response = null;
             List<IdentityRole> roles = await _webAPIContext.Roles.ToListAsync();
-            IEnumerable<string> Iroles = Iroles.AsEnumerable(roles);
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser
@@ -62,7 +63,7 @@ namespace API_WEB_Ejercicio3.Controllers
                 
                 //await _webAPIContext.Users.AddAsync(user);
                 var result = await _userManager.CreateAsync(user, auth.Password);
-                await _userManager.AddToRolesAsync(user, 
+                await _userManager.AddToRoleAsync(user, "Basic");
 
                 if (result.Succeeded)
                 {
