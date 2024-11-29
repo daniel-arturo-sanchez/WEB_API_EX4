@@ -143,13 +143,13 @@ namespace API_WEB_Ejercicio3.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fb2aa7d8-3507-49a0-8aa4-818567862611",
+                            Id = "b0ca6c88-c831-4d02-a5bb-1fcd9a653a29",
                             Name = "Basic",
                             NormalizedName = "BASIC"
                         },
                         new
                         {
-                            Id = "9253ee9f-10f5-4551-b287-3d619ca24a76",
+                            Id = "6ad519c0-853a-468d-a221-f0b937517dfa",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -247,33 +247,33 @@ namespace API_WEB_Ejercicio3.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e73798b5-8431-4aa3-a7f7-389787269e62",
+                            Id = "5380972d-3455-479e-bfbd-1ff6dcb541dd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fd6f7ee3-7081-4e64-ac54-9ef48fec9d78",
+                            ConcurrencyStamp = "1ded0d22-7101-4d42-be03-4c65811db67e",
                             Email = "basic@ejercicio4.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "BASIC@EJERCICIO4.COM",
                             NormalizedUserName = "BASIC@EJERCICIO4.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMJiHSWLlFXCcB/VPlqYEFHjELACJFD/pNES6mVZziMGMdU6S1G9OfiPUMQCZjXsqw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAED7zLiOMbb8HKl+qfcXhIiNNeVPgFBM8PTkLuXnyTA23Y3KMCOoLPqtIy8jiZU73zw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c7630b31-13dc-4029-94a8-59eaa1d9b421",
+                            SecurityStamp = "a59eb60e-c7a1-4810-942d-b1e08473b7a2",
                             TwoFactorEnabled = false,
                             UserName = "basic@ejercicio4.com"
                         },
                         new
                         {
-                            Id = "a9b6da32-9e58-44b7-b777-56a8ab1ffae3",
+                            Id = "14d5452f-89e2-4a6b-aeb5-2d6552b8fefd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9297dff7-3425-43cf-9efa-4047192e8e26",
+                            ConcurrencyStamp = "a9a0fa93-3bbd-467e-9f9d-61fa2ac683f9",
                             Email = "admin@ejercicio4.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EJERCICIO4.COM",
                             NormalizedUserName = "ADMIN@EJERCICIO4.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPDB9j2Vy9Yvq1uVmnA6IXNzbweE2+Js0zRrj+LeccPV4CQrEg+oluG54y9cR13A2g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEHEYaZC82beFBSOERYmZ42nWMaLHkpiXgBxS8tGps5enT5FXZh6JkbpeKzsjcEaPQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d559027f-661d-4a89-a6a0-1464c02e0232",
+                            SecurityStamp = "6f4566cb-5b26-4644-90ea-e6aac42ffabd",
                             TwoFactorEnabled = false,
                             UserName = "admin@ejercicio4.com"
                         });
@@ -307,12 +307,10 @@ namespace API_WEB_Ejercicio3.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -345,13 +343,13 @@ namespace API_WEB_Ejercicio3.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "e73798b5-8431-4aa3-a7f7-389787269e62",
-                            RoleId = "fb2aa7d8-3507-49a0-8aa4-818567862611"
+                            UserId = "5380972d-3455-479e-bfbd-1ff6dcb541dd",
+                            RoleId = "b0ca6c88-c831-4d02-a5bb-1fcd9a653a29"
                         },
                         new
                         {
-                            UserId = "a9b6da32-9e58-44b7-b777-56a8ab1ffae3",
-                            RoleId = "9253ee9f-10f5-4551-b287-3d619ca24a76"
+                            UserId = "14d5452f-89e2-4a6b-aeb5-2d6552b8fefd",
+                            RoleId = "6ad519c0-853a-468d-a221-f0b937517dfa"
                         });
                 });
 
@@ -361,12 +359,10 @@ namespace API_WEB_Ejercicio3.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");

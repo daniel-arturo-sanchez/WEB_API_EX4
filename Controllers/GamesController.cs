@@ -7,11 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_WEB_Ejercicio3.Data;
 using API_WEB_Ejercicio3.Models;
+using Microsoft.AspNetCore.Authorization;
+using NuGet.Protocol;
+using Newtonsoft.Json;
 
 namespace API_WEB_Ejercicio3.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class GamesController : ControllerBase
     {
         private readonly WebAPIContext _context;
@@ -26,7 +30,8 @@ namespace API_WEB_Ejercicio3.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<Game>>> GetGame()
         {
-            return await _context.Game.Include(g => g.Genre).ToListAsync();
+            var games = await _context.Game.Include(g => g.Genre).ToListAsync();
+            return Ok(JsonConvert.SerializeObject(games));
         }
 
         // GET: api/Games/5

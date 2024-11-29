@@ -111,8 +111,8 @@ namespace API_WEB_Ejercicio3.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -156,8 +156,8 @@ namespace API_WEB_Ejercicio3.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -197,8 +197,8 @@ namespace API_WEB_Ejercicio3.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "9253ee9f-10f5-4551-b287-3d619ca24a76", null, "Admin", "ADMIN" },
-                    { "fb2aa7d8-3507-49a0-8aa4-818567862611", null, "Basic", "BASIC" }
+                    { "6ad519c0-853a-468d-a221-f0b937517dfa", null, "Admin", "ADMIN" },
+                    { "b0ca6c88-c831-4d02-a5bb-1fcd9a653a29", null, "Basic", "BASIC" }
                 });
 
             migrationBuilder.InsertData(
@@ -206,8 +206,8 @@ namespace API_WEB_Ejercicio3.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "a9b6da32-9e58-44b7-b777-56a8ab1ffae3", 0, "9297dff7-3425-43cf-9efa-4047192e8e26", "admin@ejercicio4.com", true, false, null, "ADMIN@EJERCICIO4.COM", "ADMIN@EJERCICIO4.COM", "AQAAAAIAAYagAAAAEPDB9j2Vy9Yvq1uVmnA6IXNzbweE2+Js0zRrj+LeccPV4CQrEg+oluG54y9cR13A2g==", null, false, "d559027f-661d-4a89-a6a0-1464c02e0232", false, "admin@ejercicio4.com" },
-                    { "e73798b5-8431-4aa3-a7f7-389787269e62", 0, "fd6f7ee3-7081-4e64-ac54-9ef48fec9d78", "basic@ejercicio4.com", true, false, null, "BASIC@EJERCICIO4.COM", "BASIC@EJERCICIO4.COM", "AQAAAAIAAYagAAAAEMJiHSWLlFXCcB/VPlqYEFHjELACJFD/pNES6mVZziMGMdU6S1G9OfiPUMQCZjXsqw==", null, false, "c7630b31-13dc-4029-94a8-59eaa1d9b421", false, "basic@ejercicio4.com" }
+                    { "14d5452f-89e2-4a6b-aeb5-2d6552b8fefd", 0, "a9a0fa93-3bbd-467e-9f9d-61fa2ac683f9", "admin@ejercicio4.com", true, false, null, "ADMIN@EJERCICIO4.COM", "ADMIN@EJERCICIO4.COM", "AQAAAAIAAYagAAAAEEHEYaZC82beFBSOERYmZ42nWMaLHkpiXgBxS8tGps5enT5FXZh6JkbpeKzsjcEaPQ==", null, false, "6f4566cb-5b26-4644-90ea-e6aac42ffabd", false, "admin@ejercicio4.com" },
+                    { "5380972d-3455-479e-bfbd-1ff6dcb541dd", 0, "1ded0d22-7101-4d42-be03-4c65811db67e", "basic@ejercicio4.com", true, false, null, "BASIC@EJERCICIO4.COM", "BASIC@EJERCICIO4.COM", "AQAAAAIAAYagAAAAED7zLiOMbb8HKl+qfcXhIiNNeVPgFBM8PTkLuXnyTA23Y3KMCOoLPqtIy8jiZU73zw==", null, false, "a59eb60e-c7a1-4810-942d-b1e08473b7a2", false, "basic@ejercicio4.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -225,8 +225,8 @@ namespace API_WEB_Ejercicio3.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "9253ee9f-10f5-4551-b287-3d619ca24a76", "a9b6da32-9e58-44b7-b777-56a8ab1ffae3" },
-                    { "fb2aa7d8-3507-49a0-8aa4-818567862611", "e73798b5-8431-4aa3-a7f7-389787269e62" }
+                    { "6ad519c0-853a-468d-a221-f0b937517dfa", "14d5452f-89e2-4a6b-aeb5-2d6552b8fefd" },
+                    { "b0ca6c88-c831-4d02-a5bb-1fcd9a653a29", "5380972d-3455-479e-bfbd-1ff6dcb541dd" }
                 });
 
             migrationBuilder.InsertData(

@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_WEB_Ejercicio3.Data;
 using API_WEB_Ejercicio3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_WEB_Ejercicio3.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class GenresController : ControllerBase
     {
         private readonly WebAPIContext _context;
