@@ -15,7 +15,7 @@ namespace API_WEB_Ejercicio3.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class GamesController : ControllerBase
     {
         private readonly WebAPIContext _context;
@@ -28,10 +28,11 @@ namespace API_WEB_Ejercicio3.Controllers
         // GET: api/Games
         [HttpGet]
         [ProducesResponseType(200)]
+        [Authorize(Roles ="Basic,Admin")]
         public async Task<ActionResult<IEnumerable<Game>>> GetGame()
         {
             var games = await _context.Game.Include(g => g.Genre).ToListAsync();
-            return Ok(JsonConvert.SerializeObject(games));
+            return Ok(games);
         }
 
         // GET: api/Games/5

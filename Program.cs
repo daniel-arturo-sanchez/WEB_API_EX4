@@ -10,16 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<WebAPIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebAPIContext") ?? throw new InvalidOperationException("Connection string 'WebAPIContext' not found.")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-{
-    options.SignIn.RequireConfirmedAccount = false;
-    options.Password.RequireDigit = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequiredLength = 6;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequiredUniqueChars = 1;
-})
+builder.Services.AddIdentityCore<IdentityUser>(
+    //options =>
+    //{
+    //    options.SignIn.RequireConfirmedAccount = false;
+    //    options.Password.RequireDigit = true;
+    //    options.Password.RequireNonAlphanumeric = true;
+    //    options.Password.RequiredLength = 6;
+    //    options.Password.RequireLowercase = true;
+    //    options.Password.RequireUppercase = true;
+    //    options.Password.RequiredUniqueChars = 1;
+    //}
+)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<WebAPIContext>();
 // Add services to the container.
@@ -34,7 +36,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issue"],
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };

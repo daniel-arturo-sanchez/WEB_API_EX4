@@ -23,25 +23,23 @@ namespace API_WEB_Ejercicio3.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly WebAPIContext _webAPIContext;
-        private readonly IUserStore<IdentityUser> _userStore;
-        private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly IConfiguration _configuration;
 
         public AuthController
             (
-                SignInManager<IdentityUser> signInManager,
                 UserManager<IdentityUser> userManager,
                 WebAPIContext webAPIContext,
-                IConfiguration configuration
+                IConfiguration configuration,
+                RoleManager<IdentityRole> roleManager
             )
         {
-            _signInManager = signInManager;
             _userManager = userManager;
             _webAPIContext = webAPIContext;
             _configuration = configuration;
+            _roleManager = roleManager;
 
         }
 
@@ -104,11 +102,30 @@ namespace API_WEB_Ejercicio3.Controllers
                     var checkPassword = await _userManager.CheckPasswordAsync(user, auth.Password);
                     if (checkPassword)
                     {
+                        IList<string> roles = await _userManager.GetRolesAsync(user);
+                        string rolesText = String.Join(", ", roles);
+                        
+                        //List<string> rolesClaimed = new List<string>();
+                        //int i = 0;
+                        //string rolesClaimedText = "";
+                        //foreach (var role in roles)
+                        //{
+                        //    rolesClaimed.Add(role.ToString());
+                        //}
+
+                        //while(i < rolesClaimed.Count - 1)
+                        //    rolesClaimedText += rolesClaimed[i++] + ", ";
+                        //if (i == rolesClaimed.Count - 1)
+                        //    rolesClaimedText += rolesClaimed[i] + ".";
+
                         var claims = new List<Claim>
                         {
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString() ),
                             new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
-                            new Claim(JwtRegisteredClaimNames.Sub, user.UserName)
+                            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                            //new Claim("roles", User.Claims.ToList().ToString())
+                            //new Claim("roles", rolesClaimedText)
+                            new Claim("roles", rolesText)
                         };
 
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
