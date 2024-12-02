@@ -11,16 +11,16 @@ builder.Services.AddDbContext<WebAPIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebAPIContext") ?? throw new InvalidOperationException("Connection string 'WebAPIContext' not found.")));
 
 builder.Services.AddIdentityCore<IdentityUser>(
-    //options =>
-    //{
-    //    options.SignIn.RequireConfirmedAccount = false;
-    //    options.Password.RequireDigit = true;
-    //    options.Password.RequireNonAlphanumeric = true;
-    //    options.Password.RequiredLength = 6;
-    //    options.Password.RequireLowercase = true;
-    //    options.Password.RequireUppercase = true;
-    //    options.Password.RequiredUniqueChars = 1;
-    //}
+    options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+        options.Password.RequireDigit = true;
+        options.Password.RequireNonAlphanumeric = true;
+        options.Password.RequiredLength = 6;
+        options.Password.RequireLowercase = true;
+        options.Password.RequireUppercase = true;
+        options.Password.RequiredUniqueChars = 1;
+    }
 )
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<WebAPIContext>();

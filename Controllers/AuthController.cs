@@ -24,22 +24,16 @@ namespace API_WEB_Ejercicio3.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly WebAPIContext _webAPIContext;
         private readonly IConfiguration _configuration;
 
         public AuthController
             (
                 UserManager<IdentityUser> userManager,
-                WebAPIContext webAPIContext,
-                IConfiguration configuration,
-                RoleManager<IdentityRole> roleManager
+                IConfiguration configuration
             )
         {
             _userManager = userManager;
-            _webAPIContext = webAPIContext;
             _configuration = configuration;
-            _roleManager = roleManager;
 
         }
 
@@ -62,23 +56,21 @@ namespace API_WEB_Ejercicio3.Controllers
 
                 };
 
-                //user.PasswordHash = Seeder.PasswordHasher.HashPassword(user, auth.Password);
-                //await _webAPIContext.Users.AddAsync(user);
                 var result = await _userManager.CreateAsync(user, auth.Password);
                 
                 if (result.Succeeded)
                 {
-                        response = Ok("Usuario registrado de forma exitosa: " + auth.Email);
                     var result2 = await _userManager.AddToRoleAsync(user, "Basic");
                     if (result2.Succeeded)
                     {
+                        response = Ok("Usuario registrado de forma exitosa: " + auth.Email);
                     }
                     else
                     {
                         response = BadRequest(auth);
                     }
-
-                } else
+                }
+                else
                 {
                     response = BadRequest(auth);
                 }
@@ -103,29 +95,12 @@ namespace API_WEB_Ejercicio3.Controllers
                     if (checkPassword)
                     {
                         IList<string> roles = await _userManager.GetRolesAsync(user);
-                        //string rolesText = String.Join(", ", roles);
-                        
-                        //List<string> rolesClaimed = new List<string>();
-                        //int i = 0;
-                        //string rolesClaimedText = "";
-                        //foreach (var role in roles)
-                        //{
-                        //    rolesClaimed.Add(role.ToString());
-                        //}
-
-                        //while(i < rolesClaimed.Count - 1)
-                        //    rolesClaimedText += rolesClaimed[i++] + ", ";
-                        //if (i == rolesClaimed.Count - 1)
-                        //    rolesClaimedText += rolesClaimed[i] + ".";
 
                         var claims = new List<Claim>
                         {
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString() ),
                             new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
                             new Claim(JwtRegisteredClaimNames.Sub, user.UserName)
-                            //new Claim("roles", User.Claims.ToList().ToString())
-                            //new Claim("roles", rolesClaimedText)
-                            //new Claim("roles", rolesText)
                         };
                         
                         foreach(var role in roles)
