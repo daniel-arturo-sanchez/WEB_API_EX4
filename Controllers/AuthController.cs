@@ -103,7 +103,7 @@ namespace API_WEB_Ejercicio3.Controllers
                     if (checkPassword)
                     {
                         IList<string> roles = await _userManager.GetRolesAsync(user);
-                        string rolesText = String.Join(", ", roles);
+                        //string rolesText = String.Join(", ", roles);
                         
                         //List<string> rolesClaimed = new List<string>();
                         //int i = 0;
@@ -122,11 +122,14 @@ namespace API_WEB_Ejercicio3.Controllers
                         {
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString() ),
                             new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
-                            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                            new Claim(JwtRegisteredClaimNames.Sub, user.UserName)
                             //new Claim("roles", User.Claims.ToList().ToString())
                             //new Claim("roles", rolesClaimedText)
-                            new Claim("roles", rolesText)
+                            //new Claim("roles", rolesText)
                         };
+                        
+                        foreach(var role in roles)
+                            claims.Add(new Claim("roles", role));
 
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
                         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
